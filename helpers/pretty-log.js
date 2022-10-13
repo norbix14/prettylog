@@ -32,10 +32,10 @@ const os = require('os');
  * log('blue', 'log3.', 'color blue';
  * log('sky', 'log4.', 'color sky'; // print in white.
  *
- * // [index] (7:25:33 PM): log1. color red
- * // [index] (7:25:33 PM): log2. color green
- * // [index] (7:25:33 PM): log3. color blue
- * // [index] (7:25:33 PM): log4. color sky
+ * // [parent][index] (7:25:33 PM): log1. color red
+ * // [parent][index] (7:25:33 PM): log2. color green
+ * // [parent][index] (7:25:33 PM): log3. color blue
+ * // [parent][index] (7:25:33 PM): log4. color sky
  *
  */
 const prettylog = (
@@ -59,14 +59,16 @@ const prettylog = (
   const debugTime = new Date().toLocaleTimeString();
 
   const textColor = colors[config.color] || colors.white;
-  let fileName, fileExtension, filenamePlain;
+  let dirName, fileName, fileExtension, filenamePlain;
 
   if (config.dirname && config.filename) {
     if (OS === 'win32') {
+      dirName = path.win32.basename(config.dirname);
       fileName = path.win32.basename(config.filename);
       fileExtension = path.win32.extname(fileName);
       filenamePlain = path.win32.basename(fileName, fileExtension);
     } else {
+      dirName = path.basename(config.dirname);
       fileName = path.basename(config.filename);
       fileExtension = path.extname(fileName);
       filenamePlain = path.basename(fileName, fileExtension);
@@ -77,7 +79,7 @@ const prettylog = (
 
   return console.log(
     textColor,
-    `[${filenamePlain}] (${debugTime}):`,
+    `[${dirName}][${filenamePlain}] (${debugTime}):`,
     ...rest,
     colors.reset
   );

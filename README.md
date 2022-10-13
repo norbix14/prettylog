@@ -52,7 +52,7 @@ log('green', 'Param 1.', 'Param 2.');
 ## Results (approximate)
 
 ```diff
-- [index] (7:25:33 PM): Param 1. Param 2.
+- [parent][index] (7:25:33 PM): Param 1. Param 2.
 
-+ [index] (7:25:33 PM): Param 1. Param 2.
++ [parent][index] (7:25:33 PM): Param 1. Param 2.
 ```
